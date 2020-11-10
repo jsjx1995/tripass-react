@@ -1,25 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import TopPage from './pages/top_page';
+import { Provider, defaultTheme } from '@adobe/react-spectrum';
+import SearchResultPage from './pages/search_result_page';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider theme={defaultTheme} colorScheme="light" height="100%">
+      <div className="App">
+        <Router>
+          {/* <Route exact path='/' render={props => <TopPage {...props} />} /> */}
+          <Route exact path='/' component={TopPage} />
+          <Route path='/result/:genre/:target' component={SearchResultPage} />
+        </Router>
+      </div>
+    </Provider>
   );
 }
 
