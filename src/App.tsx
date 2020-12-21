@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import TopPage from './pages/top_page';
+import TopPage from './components/pages/top_page';
 import { Provider, defaultTheme } from '@adobe/react-spectrum';
-import SearchResultPage from './pages/search_result_page';
+import SearchResultPage from './components/pages/search_result_page';
 
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
         <Router>
           {/* <Route exact path='/' render={props => <TopPage {...props} />} /> */}
           <Route exact path='/' component={TopPage} />
-          <Route path='/result/:genre/:target' component={SearchResultPage} />
+          <Route path='/result/:target/:genre' component={SearchResultPage} />
         </Router>
       </div>
     </Provider>
