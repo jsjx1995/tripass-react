@@ -76,7 +76,6 @@ const MiniGenreCheck: React.FC<GenreCheckboxProps> = (props) => {
           return prev;
         }, []);
       setGenreList(changeCheckStatus)
-      console.log("🚀 ~ file: MiniCheckGenres.tsx ~ line 77 ~ changeCheckStatus ~ genreList", genreList);
     }
     return (
       <li>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Card, CardActions, CardContent, CardMedia, Typography, Button } from '@material-ui/core';
+import { Card,  CardContent, Typography } from '@material-ui/core';
 import { Facility } from 'interfaces/facility.dto';
 import styled from 'styled-components';
 
@@ -31,14 +31,6 @@ const InfoWindow: React.FC<InfoWindowProps> = (props) => {
             {props.facility.address}
           </Typography>
         </CardContent>
-        {/* <CardActions>
-          <Button size="small" color="primary">
-            Share
-          </Button>
-          <Button size="small" color="primary">
-            Learn More
-          </Button>
-        </CardActions> */}
       </Card>
     </StyleD>
   );
