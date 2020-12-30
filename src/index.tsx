@@ -3,11 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider as ReduxProvider } from 'react-redux';
+import { defaultTheme, Provider as AdobeProvider } from '@adobe/react-spectrum';
+import store from './store';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <AdobeProvider colorScheme="light" theme={defaultTheme}>
+    <ReduxProvider store={store}>
+      <App />
+    </ReduxProvider>
+  </AdobeProvider>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 
