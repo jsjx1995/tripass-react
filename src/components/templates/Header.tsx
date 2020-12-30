@@ -7,9 +7,6 @@ import { ReactComponent as Logo } from '_assets/tripass-logo.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      flexGrow: 1,
-    },
     menuButton: {
       marginRight: theme.spacing(2),
     },
@@ -23,17 +20,15 @@ export default function Header() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <AppBar position="sticky">
-        <Toolbar>
-          <div className={classes.menuButton} >
-            <Logo />
-          </div>
-          <Typography variant="h6" className={classes.title}>
-            TRIPASS
+    <AppBar position="sticky">
+      <Toolbar>
+        <div className={classes.menuButton} >
+          <Logo />
+        </div>
+        <Typography variant="h6" className={classes.title}>
+          TRIPASS
           </Typography>
-        </Toolbar>
-      </AppBar>
-    </div>
+      </Toolbar>
+    </AppBar>
   );
 }

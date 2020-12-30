@@ -36,12 +36,12 @@ const SearchResultPage: React.FC = () => {
     return (
       <React.Fragment>
         {currentLat && currentLng && (
-          <View width="50%" height="100%" position="fixed" right={0}>
+          <View width="50vw" position="fixed" right={0}>
             <Map
               googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`}
-              loadingElement={<div style={{ height: `100%` }} />}
-              containerElement={<div style={{ height: `100%` }} />}
-              mapElement={<div style={{ height: `100%` }} />}
+              loadingElement={<div />}
+              containerElement={<div />}
+              mapElement={<div style={{ height: `96vh` }} />}
               center={{ lat: currentLat, lng: currentLng }}
               zoom={14}
               facilities={facilities}
@@ -54,11 +54,25 @@ const SearchResultPage: React.FC = () => {
 
   return (
     <React.Fragment>
-      <HeaderComponent />
-      <Flex direction="row" justifyContent="space-between">
-        <View width="50%">
-          <SearchBoxWrap genres={genre.split(',')} searchedPlaceName={target} />
-          <ShowFacility facilities={facilities} />
+      <div style={{
+        // position: 'sticky',
+        top: '0'
+      }}>
+        <HeaderComponent />
+      </div>
+      <Flex direction="row" justifyContent="space-between" width="50vw">
+        <View>
+          <div style={{
+            height: '10vh'
+          }}>
+            <SearchBoxWrap genres={genre.split(',')} searchedPlaceName={target} />
+          </div>
+          <div style={{
+            overflow: 'scroll',
+            height: '85vh'
+          }}>
+            <ShowFacility facilities={facilities} />
+          </div>
         </View>
         <GetMap />
       </Flex >

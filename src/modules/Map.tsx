@@ -27,7 +27,10 @@ const Map: React.FC<MapProps> = (props) => {
     lng: 0,
   }
   const [position, setPosition] = React.useState<PositionType>(initialPosition)
-  const [currentFacilityInfo, setCurrentFacilityInfo] = React.useState<Facility>()
+  const [currentFacilityInfo, setCurrentFacilityInfo] = React.useState<Facility | void>()
+
+  const [currentX, setCurrentX] = React.useState<number>()
+  const [currentY, setCurrentY] = React.useState<number>()
 
   const openPopup = (facility: Facility) => (e: any) => {
     setPosition({
@@ -35,6 +38,23 @@ const Map: React.FC<MapProps> = (props) => {
       lat: facility.geolocation.latitude
     })
     setCurrentFacilityInfo(facility)
+    if (150 <= e.pixel.x) {
+      setCurrentX(-150)
+    } else if (e.pixel.x <= -150) {
+      setCurrentX(150)
+    } else {
+      setCurrentX(0)
+    }
+    if (e.pixel.y <= -300) {
+      setCurrentY(70)
+    } else {
+      setCurrentY(0)
+    }
+  }
+
+  const closePopup = () => {
+    setPosition(initialPosition)
+    setCurrentFacilityInfo()
   }
 
   const getIconAttributes = (genre: string): any => {
@@ -69,6 +89,14 @@ const Map: React.FC<MapProps> = (props) => {
         streetViewControl: false,
         zoomControl: true,
       }}
+      onClick={(e: any) => {
+        // console.log(e.domEvent.layerX)
+        // console.log(e.domEvent.layerY)
+        console.log(google.maps.Size.toString())
+        // console.log(e.pixel)
+        // setCurrentX(e.pixel.x)
+        // setCurrentY(e.pixel.y)
+      }}
     >
       {props.facilities.map((facility: Facility) => {
         return (
@@ -83,7 +111,7 @@ const Map: React.FC<MapProps> = (props) => {
       {currentFacilityInfo &&
         <Popup
           anchorPosition={position}
-          markerPixelOffset={{ x: 0, y: -32 }}
+          markerPixelOffset={{ x: currentX || 0, y: currentY || -100 }}
           facility={currentFacilityInfo}
         />
       }

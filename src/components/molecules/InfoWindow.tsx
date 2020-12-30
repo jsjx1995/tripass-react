@@ -1,45 +1,40 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { Card,  CardContent, Typography } from '@material-ui/core';
+import { Card, CardContent, createStyles, makeStyles, Theme, Typography } from '@material-ui/core';
 import { Facility } from 'interfaces/facility.dto';
-import styled from 'styled-components';
 
-const styles = {
-  card: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%',
-  },
-};
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    card: {
+      maxWidth: 280,
+      margin: "auto",
+      transition: "0.3s",
+      boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+      "&:hover": {
+        boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"
+      }
+    },
+  })
+)
 
 type InfoWindowProps = {
   facility: Facility
 }
 
-const InfoWindow: React.FC<InfoWindowProps> = (props) => {
-  // const { classes } = props;
+const InfoWindow: React.FC<InfoWindowProps> = ({ facility }) => {
+  const classes = useStyles();
   return (
-    <StyleD>
-      <Card>
-        <CardContent>
-          <Typography gutterBottom component="h2">
-            {props.facility.title}
-          </Typography>
-          <Typography component="p">
-            {props.facility.address}
-          </Typography>
-        </CardContent>
-      </Card>
-    </StyleD>
+    <Card className={classes.card}>
+      <CardContent>
+        <Typography gutterBottom component="h2">
+          {facility.title}
+        </Typography>
+        <Typography component="p">
+          {facility.address}
+        </Typography>
+      </CardContent>
+    </Card>
   );
 }
 
 
-export default withStyles(styles)(InfoWindow);
-
-
-const StyleD = styled.div`
-.gm-ui-hover-effect {display: none;}
-`
+export default InfoWindow;

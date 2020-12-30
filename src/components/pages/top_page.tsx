@@ -48,7 +48,7 @@ const TopPage: React.FC = () => {
     <React.Fragment>
       <Flex direction="column" gap="size-100" minHeight="100vh">
         <HeaderComponent />
-        <Flex justifyContent="center">
+        <Flex justifyContent="center" marginY={'size-500'}>
           <SearchField
             placeholder="施設名・場所を入力してください"
             value={searchValue}
@@ -93,7 +93,7 @@ const TopPage: React.FC = () => {
             columns={repeat('auto-fit', 'size-2000')}
             autoRows="size-2000"
             width="100%"
-            maxWidth="640px"
+            maxWidth="500px"
           >
             {icons.map((Icon: any, index: number) => (
               <View justifySelf="center" alignSelf="center" key={Icon.render.name}>

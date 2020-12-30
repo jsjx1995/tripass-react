@@ -91,6 +91,14 @@ const MiniGenreCheck: React.FC<GenreCheckboxProps> = (props) => {
 
   return (
     <Ul>
+      <li>
+        <Styled>
+        <input type="checkbox" id={'checkbox-all'} value={'all'}
+            // onChange={handleCheckbox} checked={false}
+          />
+          <label htmlFor={`checkbox-all`}>すべて</label>
+        </Styled>
+      </li>
       {genreList.map((g: genresTypeExtended, i: number) =>
         <MiniGenreCheckbox htmlID={String(i)} valueName={g.japName} key={g.engName} checked={g.checked} />
       )}
@@ -105,7 +113,8 @@ const Ul = styled.ul`
   display: flex;
   flex-wrap: wrap;
   list-style: none;
-  padding: 20px;
+  padding: 10px;
+  margin: 0;
   `;
 
 // チェックボックスのスタイル
@@ -122,7 +131,7 @@ const Styled = styled.div`
     cursor: pointer;
     display: inline-block;
     margin: 3px 0px;
-    padding: 8px 12px;
+    padding: 4px 8px;
     transition: all .2s;
     user-select: none;
     white-space: nowrap;
@@ -136,7 +145,7 @@ const Styled = styled.div`
     content: "＋";
     display: inline-block;
     font-family: "Font Awesome 5 Free";
-    font-size: 12px;
+    font-size: 8px;
     font-style: normal;
     font-variant: normal;
     font-weight: 900;
