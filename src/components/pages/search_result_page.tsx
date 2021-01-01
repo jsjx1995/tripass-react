@@ -60,8 +60,8 @@ const SearchResultPage: React.FC = () => {
       }}>
         <HeaderComponent />
       </div>
-      <Flex direction="row" justifyContent="space-between" width="50vw">
-        <View>
+      <Flex direction="row" justifyContent="space-between">
+        <View width="50vw">
           <div style={{
             height: '10vh'
           }}>
