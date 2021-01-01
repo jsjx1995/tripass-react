@@ -12,6 +12,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@types/classnames": "^2.2.11",
     "@types/googlemaps": "^3.40.3",
     "@types/jest": "^26.0.15",
     "@types/material-ui": "^0.21.8",
@@ -23,6 +24,10 @@
     "@types/react-redux": "^7.1.11",
     "@types/react-router-dom": "^5.1.6",
     "@types/styled-components": "^5.1.5",
+    "classnames": "^2.2.6",
+    "node-sass-chokidar": "^1.5.0",
+    "npm-add-script": "^1.1.0",
+    "npm-run-all": "^4.1.5",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-geocode": "^0.2.2",
@@ -38,9 +43,11 @@
   },
   "scripts": {
     "start": "PORT=9999 react-scripts start",
-    "build": "react-scripts build",
+    "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build-css": "node-sass-chokidar src/ -o build-css/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o build-css/ --watch --recursive"
   },
   "eslintConfig": {
     "extends": [

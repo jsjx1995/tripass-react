@@ -2,16 +2,21 @@ import React from 'react';
 import { Facility } from 'interfaces/facility.dto';
 import FacilityCard from 'components/molecules/FacilityCard';
 import { Grid, repeat, View } from '@adobe/react-spectrum';
-import Pagination from 'components/atoms/Pagination';
+import { Pagination } from 'components/atoms/Pagination';
 
 const ShowFacility: React.FC<{ facilities: Facility[] }> = ({ facilities }) => {
 
   const [currentPageNumber, setCurrentPageNumber] = React.useState<number>(1);
+  const handlePages = (updatePage: number) => setCurrentPageNumber(updatePage);
+
+  // 第1引数の配列を、第2引数の数字ずつにわけた配列にする関数
+  const arrayChunk = ([...array], size:number) => {
+    return array.reduce((acc, value, index) => index % size ?
+      acc :
+      [...acc, array.slice(index, index + size)], []);
+  }
 
   const GetCurrentPageFacilities = () => {
-    const arrayChunk = ([...array], size = 1) => {
-      return array.reduce((acc, value, index) => index % size ? acc : [...acc, array.slice(index, index + size)], []);
-    }
     const splitedFacilities = arrayChunk(facilities, 10)
     return (
       <React.Fragment>
@@ -40,8 +45,9 @@ const ShowFacility: React.FC<{ facilities: Facility[] }> = ({ facilities }) => {
       }
       {facilities.length !== 0 && (
         <Pagination
-          facilitySize={facilities.length}
-          setCurrentPageNumber={setCurrentPageNumber}
+          page={currentPageNumber}
+          totalPages={arrayChunk(facilities, 10).length}
+          handlePagination={handlePages}
         />
       )}
     </View >

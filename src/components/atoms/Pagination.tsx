@@ -1,58 +1,102 @@
 import React from 'react';
-import ReactPaginate from 'react-paginate';
-import 'styles/pagination.css'
-
-type PaginationProps = {
-  facilitySize: number; //ページ数を計算するために必要な全facilityの数
-  // handleSearchUser: () => void;  // facilityを検索する関数
-  setCurrentPageNumber: (page: number) => void;
+import classNames from 'classnames';
+import styles from 'styles/pagination.module.scss';
+export interface Props {
+  page: number;
+  totalPages: number;
+  handlePagination: (page: number) => void;
 }
-
-const ONE_PAGE_DISPLAY_FACILITY = 10;
-const LAST_DISPLAY_SIZE = 20;
-const AROUND_DISPLAY_PAGES = 5;
-
-const Pagination = (props: PaginationProps) => {
-  const { facilitySize, setCurrentPageNumber } = props;
-
-  const handlePaginate = (selectedItem: { selected: number }) => {
-    const page = selectedItem.selected + 1;
-    setCurrentPageNumber(page);
-  };
-
-
-  const arrowIcon = (iconName: 'left' | 'right') => {
-    return (
-      <i className={`fas fa-chevron-${iconName}`}></i>
-    );
-  };
-
-  // ページ数の計算
-  const calculatePageCount = () => {
-    return Math.ceil(facilitySize / ONE_PAGE_DISPLAY_FACILITY)
-  };
-
-  // ページネーションを表示
+export const PaginationComponent: React.FC<Props> = ({
+  page,
+  totalPages,
+  handlePagination,
+}) => {
   return (
-    <div>
-      <ReactPaginate
-        pageCount={calculatePageCount()}
-        marginPagesDisplayed={LAST_DISPLAY_SIZE}
-        pageRangeDisplayed={AROUND_DISPLAY_PAGES}
-        onPageChange={handlePaginate}
-        containerClassName="pagination"
-        pageClassName="page-item"
-        pageLinkClassName="page-link"
-        activeClassName="active"
-        activeLinkClassName="active"
-        previousLinkClassName="previous-link"
-        nextLinkClassName="next-link"
-        previousLabel={arrowIcon('left')}
-        nextLabel={arrowIcon('right')}
-        disabledClassName="disabled-button"
-      />
+    <div className={styles.pagination}>
+      {page !== 1 && (
+        <button
+          onClick={() => handlePagination(page - 1)}
+          type="button"
+          className={classNames([styles.pageItem, styles.sides].join(' '))}
+        >
+          &lt;
+        </button>
+      )}
+      <button
+        onClick={() => handlePagination(1)}
+        type="button"
+        className={classNames(styles.pageItem, {
+          [styles.active]: page === 1,
+        })}
+      >
+        {1}
+      </button>
+      {page > 3 && <div className={styles.separator}>...</div>}
+      {page === totalPages && totalPages > 3 && (
+        <button
+          onClick={() => handlePagination(page - 2)}
+          type="button"
+          className={styles.pageItem}
+        >
+          {page - 2}
+        </button>
+      )}
+      {page > 2 && (
+        <button
+          onClick={() => handlePagination(page - 1)}
+          type="button"
+          className={styles.pageItem}
+        >
+          {page - 1}
+        </button>
+      )}
+      {page !== 1 && page !== totalPages && (
+        <button
+          onClick={() => handlePagination(page)}
+          type="button"
+          className={[styles.pageItem, styles.active].join(' ')}
+        >
+          {page}
+        </button>
+      )}
+      {page < totalPages - 1 && (
+        <button
+          onClick={() => handlePagination(page + 1)}
+          type="button"
+          className={styles.pageItem}
+        >
+          {page + 1}
+        </button>
+      )}
+      {page === 1 && totalPages > 3 && (
+        <button
+          onClick={() => handlePagination(page + 2)}
+          type="button"
+          className={styles.pageItem}
+        >
+          {page + 2}
+        </button>
+      )}
+      {page < totalPages - 2 && <div className={styles.separator}>...</div>}
+      <button
+        onClick={() => handlePagination(totalPages)}
+        type="button"
+        className={classNames(styles.pageItem, {
+          [styles.active]: page === totalPages,
+        })}
+      >
+        {totalPages}
+      </button>
+      {page !== totalPages && (
+        <button
+          onClick={() => handlePagination(page + 1)}
+          type="button"
+          className={[styles.pageItem, styles.sides].join(' ')}
+        >
+          &gt;
+        </button>
+      )}
     </div>
   );
 };
-
-export default Pagination;
+export const Pagination = PaginationComponent;
