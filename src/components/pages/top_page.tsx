@@ -1,8 +1,8 @@
 import React from 'react';
-import { ReactComponent as Train } from '_assets/genre_icons/train.svg';
+import { ReactComponent as Transport } from '_assets/genre_icons/transport.svg';
 import { ReactComponent as Leisure } from '_assets/genre_icons/leisure.svg';
-import { ReactComponent as Culture } from '_assets/genre_icons/culture.svg';
-import { ReactComponent as ShrineTemple } from '_assets/genre_icons/shrine.svg';
+import { ReactComponent as Public } from '_assets/genre_icons/public.svg';
+import { ReactComponent as ShrineTemple } from '_assets/genre_icons/shrinetemple.svg';
 import { ReactComponent as Sport } from '_assets/genre_icons/sport.svg';
 import { ReactComponent as Other } from '_assets/genre_icons/other.svg';
 import { Button, Flex, Grid, repeat, SearchField, View } from '@adobe/react-spectrum';
@@ -29,7 +29,7 @@ const TopPage: React.FC = () => {
 
   const [checkedGenre, setCheckedGenre] = React.useState<string[]>([]);
   const [searchValue, setSearchValue] = React.useState<string>();
-  const icons = [Culture, Train, Leisure, ShrineTemple, Sport, Other];
+  const icons = [Public, Transport, Leisure, ShrineTemple, Sport, Other];
 
   const onCheck = (selected: string) => {
     const newSelectedGenre = checkedGenre.slice();
@@ -55,17 +55,19 @@ const TopPage: React.FC = () => {
             onChange={setSearchValue}
             marginEnd="size-200"
             width="size-3600"
+            aria-label="search-field"
           />
           <Button
             variant="cta"
             onPress={() => history.push(`/result/${searchValue}/${checkedGenre.length !== 0 ? checkedGenre : 'all'}`)}
+            aria-label="search-btn"
           >検索</Button>
         </Flex>
         <Flex direction="column" alignItems="center">
           <div
             style={{
               alignItems: 'center',
-              background: checkedGenre.length === 0 ? 'rgba(170, 244, 244, 0.8)' : 'white',
+              background: checkedGenre.length === 6 ? 'rgba(170, 244, 244, 0.8)' : 'white',
               boxShadow: '0 8px 8px 0 rgba(0, 0, 0, 0.25)',
               borderRadius: '12px',
               display: 'flex',
@@ -75,13 +77,11 @@ const TopPage: React.FC = () => {
               width: '20%',
             }}
             onClick={() => {
-              if (checkedGenre.length !== 8) {
-                setCheckedGenre(icons.reduce(
-                  (prev: string[], current: any) => {
-                    prev.push(current.render.name.replace('Svg', '').toLowerCase());
-                    return prev;
-                  }, []));
-              } else {
+              if (checkedGenre.length < 6) {
+                setCheckedGenre(
+                  icons.map((icon: any) => icon.render.name.replace('Svg', '').toLowerCase())
+                )
+              } else if (checkedGenre.length === 6) {
                 setCheckedGenre([]);
               }
             }}
@@ -96,7 +96,7 @@ const TopPage: React.FC = () => {
             maxWidth="500px"
           >
             {icons.map((Icon: any, index: number) => (
-              <View justifySelf="center" alignSelf="center" key={Icon.render.name}>
+              <View justifySelf="center" alignSelf="center" key={Icon.render.name} aria-label={`${Icon}`}>
                 <div
                   style={{
                     alignItems: 'center',
