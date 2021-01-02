@@ -1,53 +1,15 @@
-import React from 'react';
-import styled from 'styled-components';
-import { genres, genresType } from 'uitls/genres';
-
-interface genresTypeExtended extends genresType {
-  checked: boolean;
-}
+import React from 'react'
+import styled from 'styled-components'
+import { genres } from 'uitls/genres'
+import { genresTypeExtended } from 'components/molecules/SearchBoxWrap'
 
 type GenreCheckboxProps = {
-  checkedGenres: string[];
+  genreList: genresTypeExtended[]
+  setGenreList: (value: genresTypeExtended[]) => void
 }
 
-const MiniGenreCheck: React.FC<GenreCheckboxProps> = (props) => {
-  const [all, setAll] = React.useState<boolean>(props.checkedGenres.includes('all') || props.checkedGenres.length === 6 ? true : false)
-  const [genreList, setGenreList] = React.useState<genresTypeExtended[]>(genres.map(g => {
-    return {
-      engName: g.engName,
-      japName: g.japName,
-      checked: false,
-    }
-  }))
-
-  React.useEffect(() => {
-    if (!props.checkedGenres.includes('all')) {
-      // const newGenreList = props.checkedGenres.map(checked => {
-      const newGenreList = genreList.reduce(
-        (prev: genresTypeExtended[], current: genresTypeExtended) => {
-          prev.push({
-            engName: current.engName,
-            japName: current.japName,
-            checked: props.checkedGenres.some(checked => checked === current.engName) ? true : false
-          })
-          return prev;
-        }, [])
-      // })
-      setGenreList(newGenreList)
-    } else {
-      const allChecked = genreList.reduce(
-        (prev: genresTypeExtended[], current: genresTypeExtended) => {
-          prev.push({
-            engName: current.engName,
-            japName: current.japName,
-            checked: true,
-          })
-          return prev;
-        }, [])
-      setGenreList(allChecked)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.checkedGenres])
+const MiniGenreCheck: React.FC<GenreCheckboxProps> = ({ genreList, setGenreList }) => {
+  const [all, setAll] = React.useState<boolean>(genreList.filter(g => g.checked === true).length === 6 ? true : false)
 
   const checkAll = () => {
     const isCheckedCount = genreList.filter(g => g.checked === true).length
@@ -73,9 +35,9 @@ const MiniGenreCheck: React.FC<GenreCheckboxProps> = (props) => {
   }
 
   type MiniGenreCheckboxProps = {
-    htmlID: string;
-    valueName: string;
-    checked: boolean;
+    htmlID: string
+    valueName: string
+    checked: boolean
   }
 
   const MiniGenreCheckbox: React.FC<MiniGenreCheckboxProps> = ({ htmlID, valueName, checked }) => {
@@ -136,7 +98,7 @@ const MiniGenreCheck: React.FC<GenreCheckboxProps> = (props) => {
 
   )
 }
-export default MiniGenreCheck;
+export default MiniGenreCheck
 
 
 const Ul = styled.ul`
@@ -145,7 +107,7 @@ const Ul = styled.ul`
   list-style: none;
   padding: 10px;
   margin: 0;
-  `;
+  `
 
 // チェックボックスのスタイル
 const Styled = styled.div`

@@ -1,14 +1,14 @@
-import React from 'react';
-import { ReactComponent as Transport } from '_assets/genre_icons/transport.svg';
-import { ReactComponent as Leisure } from '_assets/genre_icons/leisure.svg';
-import { ReactComponent as Public } from '_assets/genre_icons/public.svg';
-import { ReactComponent as ShrineTemple } from '_assets/genre_icons/shrinetemple.svg';
-import { ReactComponent as Sport } from '_assets/genre_icons/sport.svg';
-import { ReactComponent as Other } from '_assets/genre_icons/other.svg';
-import { Button, Flex, Grid, repeat, SearchField, View } from '@adobe/react-spectrum';
-import useReactRouter from 'use-react-router';
-import HeaderComponent from 'components/templates/Header';
-import { genresJap } from 'uitls/genres';
+import React from 'react'
+import { ReactComponent as Transport } from '_assets/genre_icons/transport.svg'
+import { ReactComponent as Leisure } from '_assets/genre_icons/leisure.svg'
+import { ReactComponent as Public } from '_assets/genre_icons/public.svg'
+import { ReactComponent as ShrineTemple } from '_assets/genre_icons/shrinetemple.svg'
+import { ReactComponent as Sport } from '_assets/genre_icons/sport.svg'
+import { ReactComponent as Other } from '_assets/genre_icons/other.svg'
+import { Button, Flex, Grid, repeat, SearchField, View } from '@adobe/react-spectrum'
+import useReactRouter from 'use-react-router'
+import HeaderComponent from 'components/templates/Header'
+import { genresJap } from 'uitls/genres'
 
 const TopPage: React.FC = () => {
 
@@ -25,24 +25,24 @@ const TopPage: React.FC = () => {
   //   }
   // }
 
-  const { history } = useReactRouter();
+  const { history } = useReactRouter()
 
-  const [checkedGenre, setCheckedGenre] = React.useState<string[]>([]);
-  const [searchValue, setSearchValue] = React.useState<string>();
-  const icons = [Public, Transport, Leisure, ShrineTemple, Sport, Other];
+  const [checkedGenre, setCheckedGenre] = React.useState<string[]>([])
+  const [searchValue, setSearchValue] = React.useState<string>()
+  const icons = [Public, Transport, Leisure, ShrineTemple, Sport, Other]
 
   const onCheck = (selected: string) => {
-    const newSelectedGenre = checkedGenre.slice();
+    const newSelectedGenre = checkedGenre.slice()
     if (newSelectedGenre.includes(selected)) {
-      const deleteIndex = newSelectedGenre.indexOf(selected);
+      const deleteIndex = newSelectedGenre.indexOf(selected)
       if (deleteIndex > -1) {
-        newSelectedGenre.splice(deleteIndex, 1);
+        newSelectedGenre.splice(deleteIndex, 1)
       }
     } else {
-      newSelectedGenre.push(selected);
+      newSelectedGenre.push(selected)
     }
-    setCheckedGenre(newSelectedGenre);
-  };
+    setCheckedGenre(newSelectedGenre)
+  }
 
   return (
     <React.Fragment>
@@ -59,7 +59,9 @@ const TopPage: React.FC = () => {
           />
           <Button
             variant="cta"
-            onPress={() => history.push(`/result/${searchValue}/${checkedGenre.length !== 0 ? checkedGenre : 'all'}`)}
+            onPress={() =>
+              history.push(`/result?searchValue=${searchValue}&genres=${checkedGenre.length === 0 || checkedGenre.length === 6 ? 'all' : checkedGenre}`)
+            }
             aria-label="search-btn"
           >検索</Button>
         </Flex>
@@ -82,7 +84,7 @@ const TopPage: React.FC = () => {
                   icons.map((icon: any) => icon.render.name.replace('Svg', '').toLowerCase())
                 )
               } else if (checkedGenre.length === 6) {
-                setCheckedGenre([]);
+                setCheckedGenre([])
               }
             }}
           >
@@ -121,6 +123,6 @@ const TopPage: React.FC = () => {
         </Flex>
       </Flex>
     </React.Fragment >
-  );
-};
-export default TopPage;;
+  )
+}
+export default TopPage

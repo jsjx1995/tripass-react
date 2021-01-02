@@ -12,7 +12,8 @@ function App() {
         <Router>
           {/* <Route exact path='/' render={props => <TopPage {...props} />} /> */}
           <Route exact path='/' component={TopPage} />
-          <Route path='/result/:target/:genre' component={SearchResultPage} />
+          <Route path='/result' component={SearchResultPage} />
+          <Route path="*" children={<div>404 Not Found</div>} /> {/* TODO 404ページの作成 */}
         </Router>
       </div>
     </Provider>
