@@ -1,12 +1,12 @@
-import { Facility } from "interfaces/facility.dto";
-import React from "react";
-import { OverlayView } from "react-google-maps";
-import InfoWindow from "./InfoWindow";
+import { Facility } from "interfaces/facility.dto"
+import React from "react"
+import { OverlayView } from "react-google-maps"
+import InfoWindow from "./InfoWindow"
 
 const getPixelPositionOffset = (pixelOffset: { x: number, y: number }) => (width: number, height: number) => ({
   x: -(width / 2) + pixelOffset.x,
   y: -(height / 2) + pixelOffset.y
-});
+})
 
 type PopupProps = {
   anchorPosition: { lat: number, lng: number }
@@ -15,6 +15,7 @@ type PopupProps = {
 }
 
 const Popup: React.FC<PopupProps> = (props) => {
+
   return (
     <OverlayView
       position={props.anchorPosition}
@@ -23,7 +24,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     >
       <InfoWindow facility={props.facility} />
     </OverlayView>
-  );
-};
+  )
+}
 
-export default Popup;
+export default Popup

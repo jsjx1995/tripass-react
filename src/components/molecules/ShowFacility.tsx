@@ -17,7 +17,7 @@ const ShowFacility: React.FC<{ facilities: Facility[] }> = ({ facilities }) => {
   }
 
   const GetCurrentPageFacilities = () => {
-    const splitedFacilities = arrayChunk(facilities, 10)
+    const splitedFacilities = arrayChunk(facilities, 20)
     return (
       <React.Fragment>
         {splitedFacilities[currentPageNumber - 1].map((f: Facility) =>
@@ -46,7 +46,7 @@ const ShowFacility: React.FC<{ facilities: Facility[] }> = ({ facilities }) => {
       {facilities.length !== 0 && (
         <Pagination
           page={currentPageNumber}
-          totalPages={arrayChunk(facilities, 10).length}
+          totalPages={arrayChunk(facilities, 20).length}
           handlePagination={handlePages}
         />
       )}

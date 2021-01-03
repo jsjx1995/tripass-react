@@ -87,6 +87,7 @@ const TopPage: React.FC = () => {
                 setCheckedGenre([])
               }
             }}
+            aria-label="all"
           >
             すべて
           </div>

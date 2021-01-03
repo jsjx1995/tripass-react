@@ -1,14 +1,14 @@
 /* global google */
-import React from "react";
+import React from "react"
 import {
   withGoogleMap,
   GoogleMap,
   withScriptjs,
   Marker
-} from "react-google-maps";
+} from "react-google-maps"
 
-import Popup from "components/molecules/Popup";
-import { Facility } from "interfaces/facility.dto";
+import Popup from "components/molecules/Popup"
+import { Facility } from "interfaces/facility.dto"
 
 type MapProps = {
   facilities: Facility[]
@@ -60,17 +60,17 @@ const Map: React.FC<MapProps> = (props) => {
   const getIconAttributes = (genre: string): any => {
     const iconPath = ((genre: string): string | void => {
       switch (genre) {
-        case "public": return "https://maps.google.com/mapfiles/ms/icons/blue-dot.png";
-        case "sport": return "https://maps.google.com/mapfiles/ms/icons/red-dot.png";
-        case "shrinetemple": return "https://maps.google.com/mapfiles/ms/icons/green-dot.png";
-        case "other": return "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
-        case "transport": return "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=|0099cc|";
-        case "leisure": return "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=|ffffff|";
+        case "public": return "https://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+        case "sport": return "https://maps.google.com/mapfiles/ms/icons/red-dot.png"
+        case "shrinetemple": return "https://maps.google.com/mapfiles/ms/icons/green-dot.png"
+        case "other": return "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
+        case "transport": return "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=|0099cc|"
+        case "leisure": return "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=|ffffff|"
         default: return "_assets/genre_icons/leisure.svg"
       }
     })
     return iconPath(genre)
-  };
+  }
 
   return (
     <GoogleMap
@@ -92,7 +92,7 @@ const Map: React.FC<MapProps> = (props) => {
       onClick={(e: any) => {
         // console.log(e.domEvent.layerX)
         // console.log(e.domEvent.layerY)
-        console.log(google.maps.Size.toString())
+        // console.log(google.maps.Size.toString())
         // console.log(e.pixel)
         // setCurrentX(e.pixel.x)
         // setCurrentY(e.pixel.y)
@@ -106,7 +106,7 @@ const Map: React.FC<MapProps> = (props) => {
             onClick={openPopup(facility)}
             icon={getIconAttributes(facility.genre)}
           />
-        );
+        )
       })}
       {currentFacilityInfo &&
         <Popup
@@ -116,7 +116,7 @@ const Map: React.FC<MapProps> = (props) => {
         />
       }
     </GoogleMap>
-  );
+  )
 }
 
-export default withScriptjs(withGoogleMap(Map));
+export default withScriptjs(withGoogleMap(Map))

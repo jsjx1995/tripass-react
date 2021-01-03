@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import ShowFacility from 'components/molecules/ShowFacility'
 import HeaderComponent from 'components/templates/Header'
-import { fetchFacilities, FacilityState } from 'ducks/facilitySlicer'
-import Map from 'modules/Map'
+import { fetchFacilities } from 'redux/facilitySlice'
+import Map from 'components/molecules/Map'
 import SearchBoxWrap from 'components/molecules/SearchBoxWrap'
 import { geocode } from 'modules/Geocode'
+import { RootState } from 'redux/rootReducers'
 
 const SearchResultPage: React.FC = () => {
   const { search } = useLocation()
@@ -17,8 +18,7 @@ const SearchResultPage: React.FC = () => {
   const [currentLng, setCurrentLng] = React.useState<number>()
 
   const dispatch = useDispatch()
-  const facilitySelector = (state: FacilityState) => state.facilities
-  const facilities = useSelector<FacilityState, FacilityState['facilities']>(facilitySelector)
+  const facilities = useSelector((state: RootState) => state.facilities.facilities)
 
   React.useEffect(() => {
     let urlParamStr = decodeURIComponent(search)
@@ -41,7 +41,7 @@ const SearchResultPage: React.FC = () => {
         if (geocdeResult) {
           setCurrentLng(geocdeResult.lng)
           setCurrentLat(geocdeResult.lat)
-          dispatch(fetchFacilities({ genres: selectedGenre, lat: geocdeResult.lat, lng: geocdeResult.lng }))
+          dispatch(fetchFacilities(selectedGenre, geocdeResult.lat, geocdeResult.lng))
         }
       })
     }
@@ -81,7 +81,7 @@ const SearchResultPage: React.FC = () => {
       <Flex direction="row" justifyContent="space-between">
         <View width="50vw">
           <div style={{
-            height: '10vh'
+            height: '12vh'
           }}>
             {genres && searchValue &&
               <SearchBoxWrap checkedGenres={genres.split(',')} searchedPlaceName={searchValue} />
@@ -98,7 +98,7 @@ const SearchResultPage: React.FC = () => {
         </View>
         <GetMap />
       </Flex >
-    </React.Fragment >
+    </React.Fragment>
   )
 }
 

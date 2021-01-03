@@ -1,8 +1,9 @@
-import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import TopPage from './components/pages/top_page';
-import { Provider, defaultTheme } from '@adobe/react-spectrum';
-import SearchResultPage from './components/pages/search_result_page';
+import React from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import TopPage from './components/pages/top_page'
+import { Provider, defaultTheme } from '@adobe/react-spectrum'
+import SearchResultPage from './components/pages/search_result_page'
+import DetailPage from 'components/pages/detail_page'
 
 
 function App() {
@@ -13,11 +14,12 @@ function App() {
           {/* <Route exact path='/' render={props => <TopPage {...props} />} /> */}
           <Route exact path='/' component={TopPage} />
           <Route path='/result' component={SearchResultPage} />
+          <Route path='/detail' component={DetailPage} />
           <Route path="*" children={<div>404 Not Found</div>} /> {/* TODO 404ページの作成 */}
         </Router>
       </div>
     </Provider>
-  );
+  )
 }
 
-export default App;
+export default App

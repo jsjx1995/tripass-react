@@ -1,63 +1,79 @@
-import React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import IconButton from '@material-ui/core/IconButton';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Facility } from '../../interfaces/facility.dto';
+import React from 'react'
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardContent from '@material-ui/core/CardContent'
+// import { red } from '@material-ui/core/colors'
+// import FavoriteIcon from '@material-ui/icons/Favorite'
+import Avatar from '@material-ui/core/Avatar'
+import { Facility } from 'interfaces/facility.dto'
+import IsOpen from 'components/atoms/IsOpen'
+import ShowCurrentDayBusinessHours from 'components/atoms/ShowCurrentDayBusinessHours'
+import QueryBuilderIcon from '@material-ui/icons/QueryBuilder'
+import GetIcon from 'components/atoms/GetIcon'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       maxWidth: 345,
+      '&:hover': {
+        boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"
+      }
     },
-    media: {
-      height: 0,
-      paddingTop: '56.25%', // 16:9
+    cardContent: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      // justifyContent: 'space-around'
     },
-    expand: {
-      transform: 'rotate(0deg)',
-      marginLeft: 'auto',
-      transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-      }),
+    clock: {
+      marginRight: theme.spacing(2),
+      marginLeft: theme.spacing(2)
     },
-    expandOpen: {
-      transform: 'rotate(180deg)',
+    link: {
+      color: 'black',
+      textDecoration: 'none',
+      '&:visited': {
+        color: 'black'
+      }
     },
     avatar: {
-      backgroundColor: red[500],
+      // backgroundColor: red[500],
     },
   }),
-);
+)
+
 
 const FacilityCard: React.FC<{ facility: Facility }> = ({ facility }) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={facility.title}
-        subheader={`${facility.postalcode} ${facility.address}`}
-      />
-      <CardContent>
-        something
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-      </CardActions>
+    // <Card className={classes.root} onClick={() => history.push(`/detail?id=${facility.id}`)}>
+    <Card className={classes.root} >
+      <Link to={`/detail?id=${facility.id}`} target="_blank" className={classes.link} >
+        <CardHeader
+          // action={
+          //   <IconButton aria-label="add to favorites">
+          //     <FavoriteIcon />
+          //   </IconButton>
+          // }
+          avatar={
+            <Avatar aria-label="recipe" className={classes.avatar}>
+              <GetIcon genre={facility.genre} />
+            </Avatar>
+          }
+          title={facility.title}
+        />
+        <CardContent className={classes.cardContent}>
+          <QueryBuilderIcon />
+          <div className={classes.clock}>
+            <ShowCurrentDayBusinessHours businessHours={facility.businesshours} />
+          </div>
+          <IsOpen businessHours={facility.businesshours} />
+        </CardContent>
+      </Link>
     </Card>
-  );
+  )
 }
-export default FacilityCard;
+export default FacilityCard
