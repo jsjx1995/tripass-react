@@ -15,7 +15,8 @@ function App() {
           <Route exact path='/' component={TopPage} />
           <Route path='/result' component={SearchResultPage} />
           <Route path='/detail' component={DetailPage} />
-          <Route path="*" children={<div>404 Not Found</div>} /> {/* TODO 404ページの作成 */}
+          {/* TODO 404ページの作成 */}
+          {/* <Route path="/*" children={<div>404 Not Found</div>} /> */}
         </Router>
       </div>
     </Provider>
