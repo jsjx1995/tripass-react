@@ -80,7 +80,6 @@ const DetailPage: React.FC<DetailPageProps> = () => {
         prev[temp[0]] = temp[1]
         return prev
       }, {})
-      // console.log(params)
       if (facilities.length === 0) {
         dispatch(fetchFacility(params.id))
       }
@@ -91,7 +90,6 @@ const DetailPage: React.FC<DetailPageProps> = () => {
   }, [search, facilities])
 
   const ShowBusinessHours = ({ businessHours }: { businessHours: Businesshours }) => {
-    // type Days = typeof days[number]
     return (
       <div>
         {daysEng.map((d, i) => {
@@ -118,18 +116,18 @@ const DetailPage: React.FC<DetailPageProps> = () => {
   }
 
   const showURL = (url: string) =>
-    <a key={url} href={url} target="_blank" rel="noreferrer" style={{
-      wordBreak: 'break-all'
-    }}>{url}</a>
+    <a
+      key={url}
+      href={url}
+      target="_blank"
+      rel="noreferrer"
+      style={{ wordBreak: 'break-all' }}
+    >{url}</a>
 
   const showPhone = (number: string) =>
     <a key={number} href={`tel:${number}`} type="phone" rel="noreferrer">{number}</a>
 
-  const isPriceExist = (priceInfo: string[]) => {
-    console.log("🚀 ~ file: detail_page.tsx ~ line 126 ~ isPriceExist ~ priceInfo", priceInfo)
-    console.log("🚀 ~ file: detail_page.tsx ~ line 132 ~ isPriceExist ~ priceInfo.some(p => p != null || p !== '')", priceInfo.some(p => p != null || p !== ''))
-    return priceInfo.some(p => p !== "")
-  }
+  const isPriceExist = (priceInfo: string[]) => priceInfo.some(p => p !== "")
 
   return (
     <div style={{ height: '100%' }}>
@@ -205,14 +203,6 @@ const DetailPage: React.FC<DetailPageProps> = () => {
                   {/* FIXME 公式サイトカラムの2つ目以降の情報が、GoogleMapsから取得したために、
                 怪しいので一旦1つ目のURLのみ表示する */}
                   {showURL(facility.url.replace(/\n.*$/, ''))}
-                  {/* {facility.url.split('\n').map(u => {
-                  if (u == null) return null
-                  return (
-                    <div key={u}>
-                    <a href={u} target="_blank" rel="noreferrer">{u}</a>
-                    </div>
-                    )
-                  })} */}
                 </View>
               </View>
               <View key={"accessibilities"}>
@@ -223,13 +213,10 @@ const DetailPage: React.FC<DetailPageProps> = () => {
                   <Heading level={4} margin={0}>その他情報</Heading>
                 </div>
                 <View marginStart={itemContentLeftMargin} marginBottom={itemContentBottomMargin}>
-                  {/* <ul> */}
                   {facility.accessibilities.split('\n').map((a, i) => {
                     if (a == null || a === '') return null
-                    // return <li key={a + i}>{a}</li>
                     return <div key={a + i} style={styleClasses.accessibilitiesList}>{a}</div>
                   })}
-                  {/* </ul> */}
                 </View>
               </View>
               <Divider size="M" />
@@ -239,13 +226,7 @@ const DetailPage: React.FC<DetailPageProps> = () => {
                   <Heading marginBottom={itemContentBottomMargin} level={4} margin={0}>一般料金</Heading>
                   {isPriceExist(facility.price.split('\n')) ?
                     <View marginStart={itemContentLeftMargin} marginBottom={itemContentBottomMargin}>
-                      {facility.price.split('\n').map(p => {
-                        return (
-                          <div key={p}>
-                            {p}
-                          </div>
-                        )
-                      })}
+                      {facility.price.split('\n').map(p => <div key={p}>{p}</div>)}
                     </View>
                     :
                     <View marginStart={itemContentLeftMargin} marginBottom={itemContentBottomMargin}>
@@ -257,13 +238,7 @@ const DetailPage: React.FC<DetailPageProps> = () => {
                   <Heading marginBottom={itemContentBottomMargin} level={4} margin={0}>手帳提示次</Heading>
                   {isPriceExist(facility.discountedPrice.split('\n')) ?
                     <View marginStart={itemContentLeftMargin} marginBottom={itemContentBottomMargin}>
-                      {facility.discountedPrice.split('\n').map(p => {
-                        return (
-                          <div key={p}>
-                            {p}
-                          </div>
-                        )
-                      })}
+                      {facility.discountedPrice.split('\n').map(p => <div key={p}>{p}</div>)}
                     </View>
                     :
                     <View marginStart={itemContentLeftMargin} marginBottom={itemContentBottomMargin}>
