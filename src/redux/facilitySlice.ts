@@ -3,7 +3,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 import axios from "axios"
 import {AppThunk} from "store"
 
-const BASE_URL = "http://localhost:3333/facility/"
+const BASE_URL = process.env.REACT_APP_API_URL
 
 export interface FacilityState {
   facilities: Facility[]
@@ -71,7 +71,7 @@ export const fetchFacility = (id: number): AppThunk => async (dispatch) => {
 }
 
 const getFacility = async (id: number): Promise<Facility | undefined> => {
-  const url = BASE_URL + `oneFacility?id=${id}`
+  const url = BASE_URL + `facility/oneFacility?id=${id}`
   try {
     const {data} = await axios.get<Facility>(url)
     if (data) {
@@ -101,7 +101,7 @@ const getFacilities = async (genres: string[], lat: number, lng: number): Promis
     }, "")
     const geo_params = `lat=${lat}&lng=${lng}`
 
-    const url = BASE_URL + "queries?" + genres_params + geo_params
+    const url = BASE_URL + "facility/queries?" + genres_params + geo_params
     const {data} = await axios.get<Facility[]>(url)
     if (data) {
       return data

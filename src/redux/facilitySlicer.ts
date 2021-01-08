@@ -1,17 +1,17 @@
-import {Facility} from "../interfaces/facility.dto";
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {Facility} from "../interfaces/facility.dto"
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit"
 // import getFacilities from './getFacilities';
 
 export interface FacilityState {
-  facilities: Facility[];
-  loading: boolean;
-  error: string | null;
+  facilities: Facility[]
+  loading: boolean
+  error: string | null
 }
 
 interface FetchFacilitiesState {
-  genres: string[];
-  lat: number;
-  lng: number;
+  genres: string[]
+  lat: number
+  lng: number
 }
 
 const initialState: FacilityState = {
@@ -93,31 +93,32 @@ const initialState: FacilityState = {
   ],
   loading: false,
   error: null,
-};
+}
+
+const BASE_URL = process.env.REACT_APP_API_URL
 
 export const fetchFacilities = createAsyncThunk(
   "facility/fatchFacilities",
   async (arg: FetchFacilitiesState, thunkAPI) => {
-    const {genres, lat, lng} = arg;
+    const {genres, lat, lng} = arg
 
-    const BASE_URL = "http://localhost:3333/";
     const genres_params = genres.reduce((prev: string, current: string) => {
-      prev += `genres[]=${current}&`;
-      return prev;
-    }, "queries?");
-    const geo_params = `lat=${lat}&lng=${lng}`;
+      prev += `genres[]=${current}&`
+      return prev
+    }, "queries?")
+    const geo_params = `lat=${lat}&lng=${lng}`
     // const facilitiesData = await fetch(
     //   'http://localhost:3333/facility/queries?genres[]=fuga&genres[]=foo&genres[]=nophoto&lat=34.6911812&lng=135.4914561',
     //   {
     const facilitiesData = await fetch(BASE_URL + "facility/" + genres_params + geo_params, {
       method: "GET",
-    });
+    })
     if (facilitiesData.ok) {
-      return await facilitiesData.json();
+      return await facilitiesData.json()
     }
-    throw new Error("fetch count error");
+    throw new Error("fetch count error")
   }
-);
+)
 
 export const facilitySlice = createSlice({
   name: "facilities",
@@ -127,7 +128,7 @@ export const facilitySlice = createSlice({
     [fetchFacilities.pending.type]: (state, action) => {
       return {
         ...state,
-      };
+      }
     },
     [fetchFacilities.fulfilled.type]: (state, action): FacilityState => {
       // console.log(state);
@@ -137,11 +138,11 @@ export const facilitySlice = createSlice({
         error: "",
         loading: false,
         facilities: action.payload,
-      };
+      }
     },
     [fetchFacilities.rejected.type]: (state, action) => {
-      console.log(state);
-      console.log(action);
+      console.log(state)
+      console.log(action)
     },
   },
-});
+})

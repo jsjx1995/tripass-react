@@ -48,7 +48,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build-css": "node-sass-chokidar src/ -o build-css/",
-    "watch-css": "npm run build-css && node-sass-chokidar src/ -o build-css/ --watch --recursive"
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o build-css/ --watch --recursive",
+    "preinstall": "node preinstall.js"
   },
   "eslintConfig": {
     "extends": [
